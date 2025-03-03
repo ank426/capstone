@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Processor</title>
+</head>
+<body>
+    <h2>Submit Text</h2>
+    <form method="post">
+        <textarea name="user_text" rows="10" cols="50">{{ request.form.get("user_text", "") }}</textarea><br>
+        <input type="submit" value="Process">
+    </form>
+
+    {% if output %}
+    <h3>Output:</h3>
+    <pre>{{ output }}</pre>
+    {% endif %}
+</body>
+</html>
