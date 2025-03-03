@@ -7,7 +7,7 @@ if [ $# -eq 0 ]; then
 fi
 
 random_choice() {
-  echo $(( $(od -An -N1 -i /dev/urandom) % 3 ))
+  echo $(( $(od -An -N1 -i /dev/urandom) % 4 ))
 }
 
 for file in "$@"; do
@@ -24,10 +24,13 @@ for file in "$@"; do
 
     case $choice in
       1)
-        echo "$file:$line_number: error:"
+        echo "$file:$line_number: error: Error"
         ;;
       2)
-        echo "$file:$line_number: warning:"
+        echo "$file:$line_number: warning: Warning"
+        ;;
+      3)
+        echo "$file:$line_number: note: Note"
         ;;
       0|*)
         ;;
