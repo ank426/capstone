@@ -18,3 +18,6 @@ return {
     }
   end,
 }
+
+-- Command to run:
+-- :=require('lint').try_lint('capstone')
