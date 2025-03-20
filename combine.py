@@ -241,7 +241,7 @@ def extract_features_from_stored_xss(stored_xss_df):
         df.at[idx, 'html_length'] = html_content_length or len(sentence)
 
     # Drop the original 'Sentence' and 'XSS' columns if desired
-    result_df = df.drop(columns=['Sentence', 'XSS'])
+    result_df = df.drop(columns=['Sentence', 'XSS', 'Unnamed: 0'])
 
     return result_df
 
@@ -269,7 +269,7 @@ def combine_datasets(reflective_df, stored_df):
     return combined_df
 
 # Example usage:
-reflective_df = pd.read_csv('data/Data_66_featurs.csv')
-stored_df = pd.read_csv('data/XSSDataset.csv', encoding="ISO-8859-1")
+reflective_df = pd.read_csv('data/Data_66_featurs.csv').drop_duplicates()
+stored_df = pd.read_csv('data/XSSDataset.csv', encoding="ISO-8859-1").drop_duplicates()
 combined_df = combine_datasets(reflective_df, stored_df)
 combined_df.to_csv('data/combined_xss_dataset.csv', index=False)
