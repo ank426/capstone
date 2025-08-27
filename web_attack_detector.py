@@ -1,5 +1,4 @@
 import re
-import warnings
 import numpy as np
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, parse_qs
@@ -13,8 +12,6 @@ from transformers import AutoTokenizer, AutoModel
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 import pandas as pd
-
-warnings.filterwarnings('ignore')
 
 class WebAttackDataset(Dataset):
     """Dataset class for web attack detection."""
