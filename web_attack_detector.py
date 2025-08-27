@@ -3,9 +3,7 @@ import warnings
 import numpy as np
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, parse_qs
-from typing import Tuple, Optional
-import json
-from pathlib import Path
+from typing import Tuple
 
 import torch
 import torch.nn as nn
@@ -13,7 +11,7 @@ import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 from transformers import AutoTokenizer, AutoModel
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report
 import pandas as pd
 
 warnings.filterwarnings('ignore')
@@ -70,7 +68,7 @@ class FeatureExtractor:
         # URL features
         url_match = re.search(r'https?://[^\s\'"]+', payload)
         url = url_match.group(0) if url_match else 'http://example.com'
-        parsed_url = urlparse(url)
+        # urlparse(url)
 
         features['url_length'] = len(url)
         features['url_special_chars'] = len(re.findall(r'[^a-zA-Z0-9]', url))
@@ -109,10 +107,8 @@ class FeatureExtractor:
 
         if url_match:
             parsed_url = urlparse(url_match.group(0))
-            path = parsed_url.path.lower()
+            parsed_url.path.lower()
             all_params.update(parse_qs(parsed_url.query))
-        else:
-            path = ""
 
         features['num_params'] = len(all_params)
 

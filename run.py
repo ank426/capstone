@@ -68,9 +68,7 @@ class WebAttackInference:
             'prediction': self.trainer.class_names[prediction],
             'prediction_id': prediction,
             'confidence': confidence,
-            'probabilities': {
-                name: prob for name, prob in zip(self.trainer.class_names, probabilities)
-            }
+            'probabilities': dict(zip(self.trainer.class_names, probabilities))
         }
 
         if verbose:
@@ -190,7 +188,7 @@ def main():
 
         elif args.payload:
             # Single payload mode
-            print(f"\n🔍 Analyzing single payload...")
+            print("\n🔍 Analyzing single payload...")
             result = inference.predict_single(args.payload, verbose=not args.quiet)
 
             if args.output:
@@ -220,7 +218,7 @@ def main():
                 for pred in predictions:
                     summary[pred] = summary.get(pred, 0) + 1
 
-                print(f"\n📊 Summary:")
+                print("\n📊 Summary:")
                 for pred, count in summary.items():
                     print(f"   {pred}: {count}")
 

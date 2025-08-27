@@ -9,7 +9,6 @@ import json
 import pandas as pd
 from pathlib import Path
 import plotly.express as px
-import plotly.graph_objects as go
 from io import StringIO
 import sys
 import os
@@ -77,9 +76,7 @@ class WebAttackInference:
             'prediction': self.trainer.class_names[prediction],
             'prediction_id': prediction,
             'confidence': confidence,
-            'probabilities': {
-                name: prob for name, prob in zip(self.trainer.class_names, probabilities)
-            }
+            'probabilities': dict(zip(self.trainer.class_names, probabilities))
         }
 
         return result
@@ -263,12 +260,12 @@ def main():
                         columns=['Attack Type', 'Probability']
                     ).sort_values('Probability', ascending=False)
                     prob_df['Probability'] = prob_df['Probability'].round(4)
-                    st.dataframe(prob_df, use_container_width=True, hide_index=True)
+                    st.dataframe(prob_df, width="stretch", hide_index=True)
 
                 with col2:
                     # Probability chart
                     fig = create_probability_chart(result['probabilities'])
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
 
                 # Payload display
                 st.subheader("💻 Analyzed Payload")
@@ -331,12 +328,12 @@ def main():
                     list(summary.items()),
                     columns=['Attack Type', 'Count']
                 ).sort_values('Count', ascending=False)
-                st.dataframe(summary_df, use_container_width=True, hide_index=True)
+                st.dataframe(summary_df, width="stretch", hide_index=True)
 
             with col2:
                 # Summary chart
                 fig = create_batch_summary_chart(results)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
 
             # Detailed results
             st.subheader("📋 Detailed Results")
@@ -373,7 +370,7 @@ def main():
             filtered_df = results_df[results_df['Prediction'].isin(attack_filter)]
             st.dataframe(
                 filtered_df[['#', 'Payload', 'Prediction', 'Confidence']],
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
 
